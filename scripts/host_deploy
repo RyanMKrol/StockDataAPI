@@ -1,0 +1,12 @@
+AES_PASS=$1
+
+cd ~
+rm -rf StockDataAPI
+git clone https://github.com/RyanMKrol/StockDataAPI.git
+cd StockDataAPI
+git pull
+npm install
+npm run build
+pm2 delete StockDataAPI
+pm2 start build/src/app.js --name StockDataAPI
+pm2 save
