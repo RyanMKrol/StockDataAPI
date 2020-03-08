@@ -1,12 +1,5 @@
 import express from 'express'
-
-enum SupportedTimePeriods {
-  OneMonth = 'one_month',
-  ThreeMonth = 'three_month',
-  SixMonth = 'six_month',
-  OneYear = 'one_year',
-  TwoTear = 'two_year',
-}
+import { SupportedTimePeriods } from './../types'
 
 const router = express.Router()
 
