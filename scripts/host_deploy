@@ -1,14 +1,14 @@
 AES_PASS=$1
 
 cd ~
-rm -rf StockDataAPI
-git clone https://github.com/RyanMKrol/StockDataAPI.git
-cd StockDataAPI
+rm -rf StockPriceDataAPI
+git clone https://github.com/RyanMKrol/StockPriceDataAPI.git
+cd StockPriceDataAPI
 openssl aes-256-cbc -d -a -in credentials/dynamo.json.enc -out credentials/dynamo.json -k $AES_PASS
 openssl aes-256-cbc -d -a -in credentials/gmail.json.enc -out credentials/gmail.json -k $AES_PASS
 git pull
 npm install
 npm run build
-pm2 delete StockDataAPI
-pm2 start build/src/app.js --name StockDataAPI
+pm2 delete StockPriceDataAPI
+pm2 start build/src/app.js --name StockPriceDataAPI
 pm2 save
