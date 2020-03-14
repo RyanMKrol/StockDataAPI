@@ -1,7 +1,10 @@
 import express from 'express'
 import { SupportedTimePeriods } from './../types'
+import { HeatMapCache } from './../cache'
 
 const router = express.Router()
+
+const heatmapData = HeatMapCache.getInstance()
 
 router.use('/:timePeriod', async (req, res, next) => {
   const timePeriod: string = req.params.timePeriod
@@ -17,7 +20,10 @@ router.use('/:timePeriod', async (req, res, next) => {
 })
 
 router.get('/:timePeriod', async (req, res, next) => {
-  res.send('Sending back some data')
+  const timePeriod: string = req.params.timePeriod
+  const data = heatmapData.getDataForTimePeriod(timePeriod)
+
+  res.send(data)
 })
 
 export default router
