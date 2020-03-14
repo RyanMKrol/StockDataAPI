@@ -29,11 +29,20 @@ class HeatMapCache {
     this.scheduleCacheUpdate()
   }
 
-  static getInstance(): HeatMapCache {
+  public static getInstance(): HeatMapCache {
     if (!HeatMapCache.instance) {
       HeatMapCache.instance = new HeatMapCache()
     }
     return HeatMapCache.instance
+  }
+
+  public getDataForTimePeriod(period: string): any {
+    return Object.keys(this.data).map((ticker: any) => {
+      return this.data[ticker][period] ? {
+        change: this.data[ticker][period],
+        ticker: ticker,
+      } : undefined
+    }).filter((x: any) => x)
   }
 
   private async fetchCurrentCache() {
