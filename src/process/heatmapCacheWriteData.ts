@@ -2,8 +2,7 @@ import { SupportedTimePeriods } from './../types'
 
 const DAYS_RETRY = 5
 
-export function processHeatmapCacheItem(priceData: any) {
-
+export function processPriceDataForCacheWrite(priceData: any) {
   if (priceData.Count !== 1 || priceData.Items.length !== 1 || !priceData.Items[0].priceData) {
     throw new Error('Could not parse price data item')
   }
