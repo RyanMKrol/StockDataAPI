@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run-script lint && tsc",
     "lint": "eslint . --ext .ts,.tsx",
-    "start": "npm run-script build && ts-node build/bin/www.js"
+    "start": "npm run-script build && ts-node build/src/bin/www.js"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
