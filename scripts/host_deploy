@@ -10,5 +10,5 @@ git pull
 npm install
 npm run build
 pm2 delete StockPriceDataAPI
-pm2 start build/src/app.js --name StockPriceDataAPI
+pm2 start build/src/bin/www.js --name StockPriceDataAPI
 pm2 save
