@@ -1,7 +1,7 @@
-import { SupportedTimePeriods } from './../types'
+export function processPriceDataForCacheRead(cacheData: any) {
+  if (!cacheData.priceData) {
+    throw new Error('Could not read the cache data!')
+  }
 
-const DAYS_RETRY = 5
-
-export function processPriceDataForCacheRead(priceData: any) {
-
+  return cacheData.priceData
 }
