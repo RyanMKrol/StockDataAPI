@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-app.use('/heatmap', heatmapRouter)
+app.use('/api/heatmap', heatmapRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req: any, res: any, next: any) {
