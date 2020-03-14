@@ -1,1 +1,1 @@
-export { processHeatmapCacheItem } from './heatmapCacheData'
+export { processPriceDataForCacheWrite } from './heatmapCacheWriteData'
