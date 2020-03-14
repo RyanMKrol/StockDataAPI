@@ -16,15 +16,10 @@ export function processPriceDataForCacheWrite(priceData: any) {
     const pastPrice: number | null = getLastTradingDateData(prices, startingDate)
     const todayPrice: number | null = getLastTradingDateData(prices, new Date())
 
-    console.log(`Today price - ${todayPrice}, past price - ${pastPrice}`)
-
     if (pastPrice && todayPrice) {
-      console.log(`Diff - ${todayPrice/pastPrice*100}`)
       data[period] = (todayPrice/pastPrice*100)-100
     }
   })
-
-  console.log(data)
 
   return data
 }
@@ -70,7 +65,7 @@ function getStartingDateForTimePeriod(period: string): Date {
     date.setFullYear(date.getFullYear() - 2)
     break
   default:
-    console.log('Have not provided a supported time period')
+    throw new Error('Have not provided a supported time period')
   }
 
   return date
