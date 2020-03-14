@@ -1,1 +1,5 @@
-export { readHeatmapCache, readTickerTable } from './dynamo'
+export {
+  readHeatmapCache,
+  readTickerTable,
+  writeHeatmapCache,
+} from './dynamo'

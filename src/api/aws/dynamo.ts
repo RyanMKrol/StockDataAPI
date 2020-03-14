@@ -14,6 +14,16 @@ export function readHeatmapCache() {
   return dynamoDb.readTable(table, expression, expressionData)
 }
 
+export function writeHeatmapCache(cacheData: any) {
+  const tableName = 'TickerData'
+  const insertItem = {
+    'itemType': 'cache',
+    'priceData': cacheData,
+  }
+
+  return dynamoDb.writeTable(tableName, insertItem)
+}
+
 export function readTickerTable(ticker: string) {
   const table = 'TickerData'
   const expression = 'ticker = :ticker'
