@@ -1,5 +1,5 @@
-import MailSender from 'noodlesmail'
-import gmailCredentials from './../credentials/gmail.json'
+import MailSender from 'noodlemail'
+import gmailCredentials from './../../credentials/gmail.json'
 
 const mailClient = new MailSender(gmailCredentials)
 mailClient.setFrom('"StockPriceDataAPI" <ryankrol.m@gmail.com>')
