@@ -58,7 +58,7 @@ class HeatMapCache {
     const self = this
 
     schedule.scheduleJob('0 0 16 * * *', async () => {
-      await sendMail('Starting the hearmap cache update for the day!', '')
+      await sendMail('Starting the heatmap cache update for the day!', '')
 
       const tickers = await fetchIndexTickers()
 
