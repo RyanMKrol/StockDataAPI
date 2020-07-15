@@ -1,4 +1,4 @@
-import MailSender from 'noodlemail'
+import MailSender from 'noodle-email'
 import gmailCredentials from './../../credentials/gmail.json'
 
 const mailClient = new MailSender(gmailCredentials)
