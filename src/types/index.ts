@@ -1,1 +1,0 @@
-export { SupportedTimePeriods } from './SupportedTimePeriods'
