@@ -1,8 +1,7 @@
 /**
- * Used whenever we get an Invalid response from an API
- *
+ * Used whenever a request provides an unsupported time period
  */
-class InvalidResponse extends Error {
+class TimePeriodUnsupported extends Error {
   /**
    * @param {...any} params Anything you want passing to the Error constructor
    */
@@ -12,12 +11,12 @@ class InvalidResponse extends Error {
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, InvalidResponse);
+      Error.captureStackTrace(this, TimePeriodUnsupported);
     }
 
-    this.Error = 'InvalidResponse';
-    this.StatusCode = 500;
+    this.Error = 'TimePeriodUnsupported';
+    this.StatusCode = 400;
   }
 }
 
-export default InvalidResponse;
+export default TimePeriodUnsupported;
