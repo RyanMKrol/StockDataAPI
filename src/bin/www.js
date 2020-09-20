@@ -74,7 +74,7 @@ function onListening() {
  * Get port from environment and store in Express.
  */
 
-port = normalizePort(process.env.PORT || '8000');
+port = normalizePort(process.env.PORT || '8003');
 app.set('port', port);
 
 /**
