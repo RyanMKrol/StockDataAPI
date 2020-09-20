@@ -1,9 +1,9 @@
 /** @module errors */
 
 /**
- * Used whenever a request provides an unsupported time period
+ * Used whenever the we haven't been able to fetch enough data for a response
  */
-class DataNotFound extends Error {
+class InsufficientData extends Error {
   /**
    * @param {...any} params Anything you want passing to the Error constructor
    */
@@ -13,12 +13,12 @@ class DataNotFound extends Error {
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, DataNotFound);
+      Error.captureStackTrace(this, InsufficientData);
     }
 
-    this.Error = 'DataNotFound';
-    this.StatusCode = 400;
+    this.Error = 'InsufficientData';
+    this.StatusCode = 500;
   }
 }
 
-export default DataNotFound;
+export default InsufficientData;
