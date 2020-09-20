@@ -5,7 +5,7 @@ import logger from 'morgan';
 import createError from 'http-errors';
 import cors from 'cors';
 
-import heatmapRouter from './modules/routes/heatmap';
+import heatmapRouter from './routes/heatmap';
 
 const app = express();
 
@@ -27,6 +27,8 @@ app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  console.log('in this guy');
 
   // render the error page
   res.status(err.status || 500);
