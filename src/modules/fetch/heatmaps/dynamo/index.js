@@ -7,7 +7,7 @@
 import { DynamoReadBatch } from 'noodle-utils';
 import { DYNAMO_CREDENTIALS, DYNAMO_REGION } from '../../../constants';
 import { formatHeatmapDate } from '../../../utils';
-import { DataNotFound } from '../../../errors';
+import { MissingDynamoData } from '../../../errors';
 
 // Table where ticker data is kept
 const DYNAMO_TABLE = 'TickerData';
@@ -62,7 +62,7 @@ function createDynamoReadItems(date, tickers) {
  * @param {DynamoReadBatch} batchReader Class used to read dynamo data
  * @param {string} date Date used to start the search with
  * @param {string} ticker The tickers used to find data for
- * @throws {DataNotFound} When we can't find a date to work with
+ * @throws {MissingDynamoData} When we can't find a date to work with
  * @returns {module:utils.Moment} A date object to use for our heatmap data
  */
 async function findNearestDateWithData(batchReader, date, ticker) {
@@ -79,7 +79,7 @@ async function findNearestDateWithData(batchReader, date, ticker) {
     date.subtract(1, 'days');
   }
 
-  throw new DataNotFound(`Could not find any data after retries for ticker: ${ticker}`);
+  throw new MissingDynamoData(`Could not find any data after retries for ticker: ${ticker}`);
 }
 
 export default fetchHeatmapDataForDate;
