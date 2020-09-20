@@ -18,6 +18,28 @@
       {
         "functions": false
       }
+    ],
+    "jsdoc/require-description": [
+      "error",
+      {
+        "checkConstructors": false,
+        "contexts": [
+          "ArrowFunctionExpression, ClassDeclaration, ClassExpression, FunctionDeclaration, FunctionExpression, MethodDefinition"
+        ]
+      }
+    ],
+    "jsdoc/require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "ArrowFunctionExpression": true,
+          "ClassDeclaration": true,
+          "ClassExpression": true,
+          "FunctionDeclaration": true,
+          "FunctionExpression": true,
+          "MethodDefinition": true
+        }
+      }
     ]
   }
 }
