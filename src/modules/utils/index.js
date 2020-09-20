@@ -4,6 +4,7 @@
 
 import moment from 'moment';
 import { SUPPORTED_TIME_PERIODS } from '../constants';
+import { TimePeriodUnsupported } from '../errors';
 
 /**
  * The default value from the moment import
@@ -45,4 +46,20 @@ function formatHeatmapDate(date) {
   return date.format('YYYY-MM-DD');
 }
 
-export { fetchTargetHeatmapDate, fetchTodayHeatmapDate, formatHeatmapDate };
+/**
+ * Validates if the time period in the request is valid or not
+ *
+ * @param {string} timePeriod The time period on the request
+ */
+function validateHeatmapsRequestTimePeriod(timePeriod) {
+  if (!Object.keys(SUPPORTED_TIME_PERIODS).includes(timePeriod)) {
+    throw new TimePeriodUnsupported();
+  }
+}
+
+export {
+  fetchTargetHeatmapDate,
+  fetchTodayHeatmapDate,
+  formatHeatmapDate,
+  validateHeatmapsRequestTimePeriod,
+};
