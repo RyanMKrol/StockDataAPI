@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import InvalidResponse from '../../errors';
+import { InvalidResponse } from '../../errors';
 
 const BASE_URL = 'http://stocktickersapi.xyz/api/tickers';
 const STOCK_INDEX = 'ftse_350';
