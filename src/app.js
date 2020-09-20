@@ -5,7 +5,7 @@ import logger from 'morgan';
 import createError from 'http-errors';
 import cors from 'cors';
 
-import heatmapRouter from './routes/heatmap';
+import heatmapRouter from './modules/routes/heatmap';
 
 const app = express();
 
