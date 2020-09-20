@@ -1,3 +1,7 @@
+/**
+ * @memberof module:fetch
+ */
+
 import fetch from 'node-fetch';
 
 import { InvalidResponse } from '../../errors';
