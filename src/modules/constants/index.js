@@ -1,5 +1,8 @@
 /** @module constants */
 
+import DYNAMO_CREDENTIALS from '../../../credentials/dynamo.json';
+import GMAIL_CREDENTIALS from '../../../credentials/gmail.json';
+
 const SUPPORTED_TIME_PERIODS = {
   one_month: 30,
   three_month: 90,
@@ -8,4 +11,4 @@ const SUPPORTED_TIME_PERIODS = {
   two_year: 720,
 };
 
-export default SUPPORTED_TIME_PERIODS;
+export { SUPPORTED_TIME_PERIODS, DYNAMO_CREDENTIALS, GMAIL_CREDENTIALS };
