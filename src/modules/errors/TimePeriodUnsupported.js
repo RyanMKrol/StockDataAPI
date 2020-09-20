@@ -1,4 +1,6 @@
-/** @module errors */
+/**
+ * @memberof module:errors
+ */
 
 /**
  * Used whenever a request provides an unsupported time period

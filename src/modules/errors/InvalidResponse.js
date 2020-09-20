@@ -1,4 +1,6 @@
-/** @module errors */
+/**
+ * @memberof module:errors
+ */
 
 /**
  * Used whenever we get an Invalid response from an API
