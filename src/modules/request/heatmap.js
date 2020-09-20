@@ -1,3 +1,7 @@
+/**
+ * @memberof module:request
+ */
+
 import moment from 'moment';
 
 import SUPPORTED_TIME_PERIODS from '../constants';

@@ -1,4 +1,8 @@
 /**
+ * @memberof module:data
+ */
+
+/**
  * This essentially models a dictionary with some simple methods.
  */
 class DataStore {
