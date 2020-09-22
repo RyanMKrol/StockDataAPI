@@ -9,7 +9,7 @@ import MailSender from 'noodle-email';
 
 import { SUPPORTED_TIME_PERIODS, GMAIL_CREDENTIALS } from '../constants';
 import { fetchTargetHeatmapDate, fetchTodayHeatmapDate } from '../utils';
-import { fetchHeatmapDataForTimePeriod, fetchIndexTickers } from '../fetch';
+import { fetchHeatmapDataForDate, fetchIndexTickers } from '../fetch';
 import { InsufficientData } from '../errors';
 
 import dataStore from '../data';
@@ -31,7 +31,7 @@ async function scheduleHeatmapDataUpdates() {
   schedule.scheduleJob('0 0 0 * * *', async () => {
     try {
       await mailClient.sendMail('Starting to update the Heatmap data!', '');
-      main();
+      await main();
       await mailClient.sendMail('Finished updating the Heatmap data!', '');
     } catch (e) {
       await mailClient.sendMail('Failed to update the Heatmap data!', '');
@@ -47,14 +47,14 @@ async function main() {
   const tickers = (await fetchIndexTickers()).sort();
 
   const todayDate = fetchTodayHeatmapDate();
-  const todayHeatmapData = await fetchHeatmapDataForTimePeriod(todayDate, tickers);
+  const todayHeatmapData = await fetchHeatmapDataForDate(todayDate, tickers);
 
   for (let i = 0; i < timePeriods.length; i += 1) {
     const currentTimePeriod = timePeriods[i];
 
     const dateForTimePeriod = fetchTargetHeatmapDate(currentTimePeriod);
 
-    const targetHeatmapData = await fetchHeatmapDataForTimePeriod(dateForTimePeriod, tickers);
+    const targetHeatmapData = await fetchHeatmapDataForDate(dateForTimePeriod, tickers);
 
     const data = generateHeatmapPrices(todayHeatmapData, targetHeatmapData);
 
@@ -77,14 +77,14 @@ function generateHeatmapPrices(todayData, targetData) {
       const today = todayData[ticker];
       const target = targetData[ticker];
 
-      const isTodayError = today instanceof Error;
-      const isTargetError = target instanceof Error;
+      const isTodayError = today.length !== 1 || today instanceof Error;
+      const isTargetError = target.length !== 1 || target instanceof Error;
 
       return isTodayError || isTargetError
         ? undefined
         : {
           ticker,
-          change: (today.price / target.price) * 100 - 100,
+          change: (today[0].price / target[0].price) * 100 - 100,
         };
     })
     .filter((x) => x);
