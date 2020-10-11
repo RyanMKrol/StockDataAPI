@@ -2,4 +2,5 @@
  * @module schedules
  */
 
-export { default } from './heatmapDataUpdater';
+export { default as scheduleHeatmapDataUpdates } from './heatmapsDataUpdater';
+export { default as scheduleTickerDataUpdates } from './tickersDataUpdater';
