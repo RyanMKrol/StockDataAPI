@@ -2,9 +2,9 @@ import express from 'express';
 
 import { DATA_STORE_KEY_HEATMAPS } from '../modules/constants';
 import { scheduleHeatmapDataUpdates } from '../modules/schedules';
-import dataStore from '../modules/data';
 import { validateHeatmapsRequestTimePeriod } from '../modules/utils';
 import { MissingCacheData } from '../modules/errors';
+import dataStore from '../modules/data';
 
 // When this route is created, we need to setup the schedule that
 // provides data to it

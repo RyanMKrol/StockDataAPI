@@ -1,7 +1,10 @@
 import express from 'express';
 
-import fetchTickers from '../modules/fetch';
+import { DATA_STORE_KEY_TICKERS } from '../modules/constants';
 import { scheduleTickerDataUpdates } from '../modules/schedules';
+import { validateTickersDataRequestIndex } from '../modules/utils';
+import { MissingCacheData } from '../modules/errors';
+import dataStore from '../modules/data';
 
 const router = express.Router();
 
@@ -10,8 +13,24 @@ const router = express.Router();
 scheduleTickerDataUpdates();
 
 router.get('/:index', async (req, res) => {
-  const tickers = await fetchTickers(req.params.index);
-  res.send(tickers);
+  const { index } = req.params;
+
+  try {
+    validateTickersDataRequestIndex(index);
+
+    const data = dataStore.getData(DATA_STORE_KEY_TICKERS);
+
+    if (!data || !data[index]) {
+      throw new MissingCacheData();
+    }
+
+    res.send(data[index]);
+  } catch (err) {
+    res.status(err.StatusCode || 500);
+    res.send({
+      error: err.Error,
+    });
+  }
 });
 
 export default router;
