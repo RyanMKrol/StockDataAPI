@@ -3,8 +3,8 @@
  */
 
 import moment from 'moment';
-import { SUPPORTED_TIME_PERIODS } from '../constants';
-import { TimePeriodUnsupported } from '../errors';
+import { SUPPORTED_TIME_PERIODS, SUPPORTED_INDEXES } from '../constants';
+import { TimePeriodUnsupported, IndexUnsupported } from '../errors';
 
 /**
  * The default value from the moment import
@@ -57,9 +57,21 @@ function validateHeatmapsRequestTimePeriod(timePeriod) {
   }
 }
 
+/**
+ * Validates if the index in the request is valid or not
+ *
+ * @param {string} index The index on the request
+ */
+function validateTickersDataRequestIndex(index) {
+  if (!Object.keys(SUPPORTED_INDEXES).includes(index)) {
+    throw new IndexUnsupported();
+  }
+}
+
 export {
   fetchTargetHeatmapDate,
   fetchTodayHeatmapDate,
   formatHeatmapDate,
   validateHeatmapsRequestTimePeriod,
+  validateTickersDataRequestIndex,
 };
