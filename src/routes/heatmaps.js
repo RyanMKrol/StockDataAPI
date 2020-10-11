@@ -1,7 +1,7 @@
 import express from 'express';
-import { DATA_STORE_KEY_HEATMAPS } from '../modules/constants';
 
-import scheduleHeatmapDataUpdates from '../modules/schedules';
+import { DATA_STORE_KEY_HEATMAPS } from '../modules/constants';
+import { scheduleHeatmapDataUpdates } from '../modules/schedules';
 import dataStore from '../modules/data';
 import { validateHeatmapsRequestTimePeriod } from '../modules/utils';
 import { MissingCacheData } from '../modules/errors';
