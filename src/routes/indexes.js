@@ -1,5 +1,5 @@
 import express from 'express';
-import fetchStockIndexes from '../modules/fetch';
+import { fetchStockIndexes } from '../modules/fetch';
 
 const router = express.Router();
 
