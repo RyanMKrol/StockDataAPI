@@ -1,4 +1,4 @@
-import indexData from '../../../../config/indexes.json';
+import { SUPPORTED_INDEXES } from '../../constants';
 
 /**
  * Returns the current stock indexes that we support
@@ -6,7 +6,7 @@ import indexData from '../../../../config/indexes.json';
  * @returns {Array.<string>} A list of indexes
  */
 function fetchStockIndexes() {
-  return Object.keys(indexData);
+  return Object.keys(SUPPORTED_INDEXES);
 }
 
 export default fetchStockIndexes;
