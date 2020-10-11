@@ -2,6 +2,7 @@ import DYNAMO_CREDENTIALS from '../../../credentials/dynamo.json';
 import GMAIL_CREDENTIALS from '../../../credentials/gmail.json';
 
 const DYNAMO_REGION = 'us-east-2';
+const DATA_STORE_KEY_HEATMAPS = 'heatmaps';
 
 const SUPPORTED_TIME_PERIODS = {
   one_month: 30,
@@ -12,5 +13,9 @@ const SUPPORTED_TIME_PERIODS = {
 };
 
 export {
-  SUPPORTED_TIME_PERIODS, DYNAMO_CREDENTIALS, GMAIL_CREDENTIALS, DYNAMO_REGION,
+  SUPPORTED_TIME_PERIODS,
+  DYNAMO_CREDENTIALS,
+  GMAIL_CREDENTIALS,
+  DYNAMO_REGION,
+  DATA_STORE_KEY_HEATMAPS,
 };

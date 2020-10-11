@@ -7,7 +7,7 @@
 import schedule from 'node-schedule';
 import MailSender from 'noodle-email';
 
-import { SUPPORTED_TIME_PERIODS, GMAIL_CREDENTIALS } from '../constants';
+import { SUPPORTED_TIME_PERIODS, GMAIL_CREDENTIALS, DATA_STORE_KEY_HEATMAPS } from '../constants';
 import { fetchTargetHeatmapDate, fetchTodayHeatmapDate } from '../utils';
 import { fetchHeatmapDataForDate, fetchIndexTickers } from '../fetch';
 import { InsufficientData } from '../errors';
@@ -58,7 +58,7 @@ async function main() {
 
     const data = generateHeatmapPrices(todayHeatmapData, targetHeatmapData);
 
-    dataStore.storeData(currentTimePeriod, data);
+    dataStore.storeData(DATA_STORE_KEY_HEATMAPS, { [currentTimePeriod]: data });
   }
 }
 

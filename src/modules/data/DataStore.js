@@ -20,7 +20,10 @@ class DataStore {
    * @param {any} data The data you want to store against your key
    */
   storeData(key, data) {
-    this.store[key] = data;
+    this.store[key] = {
+      ...this.store[key],
+      ...data,
+    };
   }
 
   /**
