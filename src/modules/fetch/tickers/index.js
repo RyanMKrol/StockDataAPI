@@ -1,15 +1,10 @@
 import cheerio from 'cheerio';
 import curl from 'curl';
 import arrayRange from 'array-range';
-import Cache from 'noodle-cache';
 
-import indexData from '../../../../config/indexes.json';
+import { SUPPORTED_INDEXES } from '../../constants';
 
 const PAGINATION_IDENTIFIER = '.page-last';
-
-// caching responses for one week
-const cacheTtlSeconds = 60 * 60 * 24 * 7;
-const CACHE = new Cache(cacheTtlSeconds);
 
 /**
  * Fetches the number of pages to get data for
@@ -18,7 +13,7 @@ const CACHE = new Cache(cacheTtlSeconds);
  * @returns {Promise.<number>} The number of pages for the index
  */
 function getNumberOfPages(stockIndex) {
-  const url = indexData[stockIndex];
+  const url = SUPPORTED_INDEXES[stockIndex];
 
   if (!url) {
     throw new Error(`Could not find where to grab stock data for ${stockIndex}`);
@@ -54,8 +49,7 @@ function getNumberOfPages(stockIndex) {
  * @returns {Promise.<Array.<string>>} A promise that will resolve to the tickers in the given index
  */
 async function getRawTickersForAllPages(stockIndex) {
-  const url = indexData[stockIndex];
-
+  const url = SUPPORTED_INDEXES[stockIndex];
   const numPages = await getNumberOfPages(stockIndex);
 
   if (!url) {
@@ -97,13 +91,7 @@ async function getRawTickersForAllPages(stockIndex) {
  * @returns {Array.<string>} List of tickers for the current index
  */
 async function fetchTickers(stockIndex) {
-  /**
-   * Wrapper for fetching the tickers we support
-   *
-   * @returns {Array.<string>} The tickers in the given index
-   */
-  const getRawTickersDataWrapper = () => getRawTickersForAllPages(stockIndex);
-  const baseTickers = await CACHE.processItem(`ticker-data-${stockIndex}`, getRawTickersDataWrapper);
+  const baseTickers = await getRawTickersForAllPages(stockIndex);
 
   // modify tickers to expected format
   const tickers = baseTickers
