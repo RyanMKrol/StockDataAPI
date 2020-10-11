@@ -1,0 +1,116 @@
+import cheerio from 'cheerio';
+import curl from 'curl';
+import arrayRange from 'array-range';
+import Cache from 'noodle-cache';
+
+import indexData from '../../../../config/indexes.json';
+
+const PAGINATION_IDENTIFIER = '.page-last';
+
+// caching responses for one week
+const cacheTtlSeconds = 60 * 60 * 24 * 7;
+const CACHE = new Cache(cacheTtlSeconds);
+
+/**
+ * Fetches the number of pages to get data for
+ *
+ * @param {string} stockIndex The current stock index we want the pages for
+ * @returns {Promise.<number>} The number of pages for the index
+ */
+function getNumberOfPages(stockIndex) {
+  const url = indexData[stockIndex];
+
+  if (!url) {
+    throw new Error(`Could not find where to grab stock data for ${stockIndex}`);
+  }
+
+  return new Promise((resolve, reject) => {
+    curl.get(url, (err, response, body) => {
+      try {
+        const $ = cheerio.load(body);
+        const numPages = new URL(
+          $(PAGINATION_IDENTIFIER)
+            .first()
+            .attr('href'),
+          'https://example.com',
+        ).searchParams.get('page');
+
+        const intNumPages = parseInt(numPages, 10);
+
+        resolve(intNumPages);
+      } catch (error) {
+        reject(
+          new Error(`Could not grab number of pages needed from page: ${url}, error: ${error}`),
+        );
+      }
+    });
+  });
+}
+
+/**
+ * Fetches the raw data around tickers for a given index
+ *
+ * @param {string} stockIndex The current index
+ * @returns {Promise.<Array.<string>>} A promise that will resolve to the tickers in the given index
+ */
+async function getRawTickersForAllPages(stockIndex) {
+  const url = indexData[stockIndex];
+
+  const numPages = await getNumberOfPages(stockIndex);
+
+  if (!url) {
+    throw new Error(`Could not find where to grab stock data for ${stockIndex}`);
+  }
+
+  const tickerTasks = arrayRange(1, numPages + 1).map(
+    (pageNumber) => new Promise((resolve, reject) => {
+      // fetch info from page
+      curl.get(`${url}?page=${pageNumber}`, (err, response, body) => {
+        // attempt to parse tickers
+        try {
+          const $ = cheerio.load(body);
+          const tickers = $('tbody tr')
+            .map((i, elem) => $(elem)
+              .find('a')
+              .eq(0)
+              .text())
+            .get();
+
+          resolve(tickers);
+        } catch (error) {
+          reject(
+            new Error(`Could not grab number of pages needed from page: ${url}, error: ${error}`),
+          );
+        }
+      });
+    }),
+  );
+
+  // wait for all tasks to finish
+  return Promise.all(tickerTasks);
+}
+
+/**
+ * Method to fetch the tickers for the current index
+ *
+ * @param {string} stockIndex The current stock index
+ * @returns {Array.<string>} List of tickers for the current index
+ */
+async function fetchTickers(stockIndex) {
+  /**
+   * Wrapper for fetching the tickers we support
+   *
+   * @returns {Array.<string>} The tickers in the given index
+   */
+  const getRawTickersDataWrapper = () => getRawTickersForAllPages(stockIndex);
+  const baseTickers = await CACHE.processItem(`ticker-data-${stockIndex}`, getRawTickersDataWrapper);
+
+  // modify tickers to expected format
+  const tickers = baseTickers
+    .flat()
+    .map((ticker) => (ticker.endsWith('.') ? `${ticker}L` : `${ticker}.L`));
+
+  return tickers;
+}
+
+export default fetchTickers;

@@ -6,6 +6,8 @@ import createError from 'http-errors';
 import cors from 'cors';
 
 import heatmapRouter from './routes/heatmap';
+import tickersRouter from './routes/tickers';
+import indexesRouter from './routes/indexes';
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api/heatmap', heatmapRouter);
+app.use('/api/tickers', tickersRouter);
+app.use('/api/indexes', indexesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
