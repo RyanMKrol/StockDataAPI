@@ -12,17 +12,18 @@ scheduleHeatmapDataUpdates();
 
 const router = express.Router();
 
-// eslint-disable-next-line no-unused-vars
-router.use('/:timePeriod', async (req, res, next) => {
+router.get('/:timePeriod', async (req, res) => {
   const { timePeriod } = req.params;
 
   try {
     validateHeatmapsRequestTimePeriod(timePeriod);
+
     const data = dataStore.getData(DATA_STORE_KEY_HEATMAPS);
 
     if (!data || !data[timePeriod]) {
       throw new MissingCacheData();
     }
+
     res.send(data[timePeriod]);
   } catch (err) {
     res.status(err.StatusCode || 500);
