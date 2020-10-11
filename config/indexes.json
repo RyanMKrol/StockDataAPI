@@ -1,7 +1,0 @@
-{
-  "ftse_100": "https://www.londonstockexchange.com/indices/ftse-100/constituents/table",
-  "ftse_250": "https://www.londonstockexchange.com/indices/ftse-250/constituents/table",
-  "ftse_350": "https://www.londonstockexchange.com/indices/ftse-350/constituents/table",
-  "ftse_all_share": "https://www.londonstockexchange.com/indices/ftse-all-share",
-  "ftse_small_cap": "https://www.londonstockexchange.com/indices/ftse-aim-all-share"
-}
